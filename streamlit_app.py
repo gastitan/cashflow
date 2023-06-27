@@ -1,6 +1,6 @@
 import tir as t
-import requests
-import app_notifications as notifier
+#import requests
+#import app_notifications as notifier
 import import_cashflow as cf
 import pandas as pd
 
