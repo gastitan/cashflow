@@ -24,7 +24,7 @@ def tir_alert():
 			tir = t.tir(cashflow, precio, plazo=2)
 
 			if tir > 9:
-				print("ALERTA %s - Price: %s - TIR: %s" % (ticker, precio, tir))
+				#print("ALERTA %s - Price: %s - TIR: %s" % (ticker, precio, tir))
 				lista.append([ticker, precio, tir])
 		except:
 			pass
