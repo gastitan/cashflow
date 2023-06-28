@@ -1,33 +1,34 @@
+import streamlit as st
 import tir as t
-#import requests
-#import app_notifications as notifier
 import import_cashflow as cf
 import pandas as pd
 
-#tickers = ['CP21O']
+st.title("El site de tu vida")
 
 all_cashflows = {}
-for i in cf.Data_ON.index:
-	try:
-		CF=pd.read_excel('cashflows_ON.xlsx', sheet_name=i)
-		all_cashflows[i]=CF
-	except:
-		pass
+lista = []
 
-for ticker in cf.Data_ON.index:
-#for ticker in tickers:
-	try:
-		#print(ticker)
-		cashflow = all_cashflows[ticker]
-		precio = cf.Data_ON.loc[ticker,'Precio_dolares']
-		
-		tir = t.tir(cashflow, precio, plazo=2)
-		#print("ticker %s %s" % (ticker, tir))
+def tir_alert():
+	for i in cf.Data_ON.index:
+		try:
+			CF=pd.read_excel('cashflows_ON.xlsx', sheet_name=i)
+			all_cashflows[i]=CF
+		except:
+			pass
 
-		if tir > 9:
-			print("ALERTA %s - Price: %s - TIR: %s" % (ticker, precio, tir))
-			#titulo = "Alerta TIR"
-			#mensaje = "La TIR de %s es %s" % (ticker, tir)
-			#notifier.enviar_notificacion(titulo, mensaje)
-	except:
-		pass
+	for ticker in cf.Data_ON.index:
+		try:
+			cashflow = all_cashflows[ticker]
+			precio = cf.Data_ON.loc[ticker,'Precio_dolares']
+			
+			tir = t.tir(cashflow, precio, plazo=2)
+
+			if tir > 9:
+				print("ALERTA %s - Price: %s - TIR: %s" % (ticker, precio, tir))
+				lista.append([ticker, precio, tir])
+		except:
+			pass
+
+tir_alert()
+df = pd.DataFrame(lista, columns = ('Ticker', 'Price', 'TIR'))
+st.table(df)
