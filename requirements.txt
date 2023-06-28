@@ -2,3 +2,4 @@ pandas==2.0.1
 ta==0.10.2
 scipy
 openpyxl
+lxml
